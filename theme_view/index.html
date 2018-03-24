@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twitter Viewer</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .col-sm-6{
+            margin: 20px 0;
+            position: relative;
+        }
+        .twitter-png{
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            z-index: 999999;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container text-center">
+    <h3 class="text-primary"><img src="img/twitter.png" width="100" alt=""> Twitter Tweepy api with get tweets</h3>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary" data-json="../data/kilicdarogluk.json">Kemal kılıçdaroğlu
+        </button>
+        <button type="button" class="btn btn-secondary" data-json="../data/erenerdemnet.json">Eren Erdem</button>
+
+    </div>
+    <div class="row justify-content-center " id="json_content"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(".btn.btn-secondary").click(function () {
+        var path = $(this).data("json");
+        $("#json_content").html("")
+
+        $.getJSON(path, function (data) {
+            var len = data.length;
+            obj = {};
+            data = Object.values(data);
+            for (i = 0; i < len; i++) {
+                obj = Object.values(data[i])[0];
+                var item = '<div class="col-sm-6"><img src="img/twitter.png" width="40" class="twitter-png "> <div class="card"> <div class="card-body"> <h6 class="card-title"><a class="text-primary" href="https://twitter.com/' + obj.author_name + '">@' + obj.author_name + '</a></h6> <p class="card-text">' + obj.text + '</p> </div></div></div>';
+                $("#json_content").append(item)
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
